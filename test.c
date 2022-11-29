@@ -22,7 +22,7 @@ static int	convert_s(va_list *args, int count)
 	return (count + len);
 }
 
-static int	convert_d_or_i(va_list *args, int count)
+static int	convert_d_i_u(va_list *args, int count)
 {
 	char	*str;
 	int		num;
@@ -32,42 +32,82 @@ static int	convert_d_or_i(va_list *args, int count)
 	str = ft_itoa(num);
 	ft_putstr_fd(str, 1);
 	len = ft_strlen(str);
-	return (count = len);
+	free(str);
+	return (count + len);
+}
+
+static int	ft_hexlen(unsigned long long num)
+{
+	int		i;
+	char	c;
+	int		temp;
+	char	buf[17];
+
+	i = 0;
+	if (num == 0)
+		return (1);
+	while (num != 0)
+	{
+		temp = num % 16;
+		if (temp < 10)
+		{
+			c = temp + 48;
+			buf[i++] = c;
+		}
+		else
+		{
+			c = temp + 87;
+			buf[i++] = c;
+		}
+		num = num / 16;
+	}
+	return (i);
 }
 
 int	convert_p(va_list *args, int count)
 {
-	unsigned long long	num;
 	void				*ptr;
-	char				*str;
 	int					len;
 
 	ptr = va_arg(*args, void *);
 	ft_putstr_fd("0x", 1);
-
-	num = ptr;
-	str = ft_itoa(num);
-	len = ft_strlen(str);
-	ft_puthex_fd(num, 1);
+	len = ft_hexlen(ptr);
+	ft_puthex_lower_fd(ptr, 1);
 	return (count + len + 2);
-}
-
-int	convert_u(va_list *args, int count)
-{
-
 }
 
 int	convert_x(va_list *args, int count)
 {
-	int num;
+	char	*str;
+	int		len;
+	int		num;
 
+	str = ft_itoa(num);
+	len = ft_strlen(str);
 	num = va_arg(*args, int);
-	ft_puthex_fd(num, 1);
+	ft_puthex_lower_fd(num, 1);
+	free(str);
+	return (count + len);
 }
 
 int	convert_xx(va_list *args, int count)
 {
+	char	*str;
+	int		len;
+	int		num;
 
+	str = ft_itoa(num);
+	len = ft_strlen(str);
+	num = va_arg(*args, int);
+	ft_puthex_upper_fd(num, 1);
+	free(str);
+	return (count + len);
+}
+
+int	convert_precentage(args, count)
+{
+	ft_putchar_fd('%', 1);
+	return (++count);
 }
 
 static int	choose_conversion(va_list *args, char var, int count)
@@ -76,16 +116,16 @@ static int	choose_conversion(va_list *args, char var, int count)
 		count = convert_c(args, count);
 	else if (var == 's')
 		count = convert_s(args, count);
-	else if (var == 'd' || var == 'i')
-		count = convert_d_or_i(args, count);
+	else if (var == 'd' || var == 'i' || var == 'u')
+		count = convert_d_i_u(args, count);
 	else if (var == 'p')
 		count = convert_p(args, count);
-	else if (var == 'u')
-		count = convert_u(args, count);
 	else if (var == 'x')
 		count = convert_x(args, count);
 	else if (var == 'X')
 		count = convert_xx(args, count);
+	else if (var == '%')
+		count = convert_precentage(args, count);
 	return (count);
 }
 
@@ -116,6 +156,7 @@ static int	print_out(const char *s, va_list *args, int count)
 			count = choose_conversion(args, var, count);
 		}
 	}
+	return (count);
 }
 
 int	ft_printf(const char *s, ...)
@@ -125,31 +166,108 @@ int	ft_printf(const char *s, ...)
 	int		count;
 	va_list args;
 
+	count = 0;
 	va_start(args, s);
-
 	count = print_out(s, &args, count);
-
 	va_end(args);
 	return (count);	
 }
 
 int	main()
 {
+	int ft;
+	int og;
 	void *ptr;
 	char *string = "Lala land!";
 	ptr = &string;
 
-	ft_printf("This is a character: %c\n", 'X');
-	ft_printf("This is two characters: %c and: %c\n", 'X', 'Y');
-	ft_printf("This is a string: %s\n", "Hello World!");
-	ft_printf("This is three strings: %s and: %s andand: %s\n", "Hello World!", "Second one...", "and a third one too :-)");
-	ft_printf("This is an integer: %d\n", 42);
-	ft_printf("This is an integer: %i\n", -42);
-	ft_printf("This zero int: %d\n", 0);
-	ft_printf("This is zero hex int: %x\n", 0);
-	ft_printf("This is hex int: %x\n", 10);
-	printf("OG = This is a pointer: %p\n", ptr);
-	ft_printf("This is a pointer: %p\n", ptr);
+	ft = ft_printf("FT This is a character: %c\n", 'X');
+	og = printf("OG This is a character: %c\n", 'X');
+	if (ft == og)
+		printf("Return value SUCCESS!\n");
+	else
+		printf("Return value FAIL! og: %d ft: %d\n", og, ft);
+	printf("\n");
+
+	ft = ft_printf("FT This is two characters: %c and: %c\n", 'X', 'Y');
+	og = printf("OG This is two characters: %c and: %c\n", 'X', 'Y');
+	if (ft == og)
+		printf("Return value SUCCESS!\n");
+	else
+		printf("Return value FAIL! og: %d ft: %d\n", og, ft);
+	printf("\n");
+
+	ft = ft_printf("FT This is a string: %s\n", "Hello World!");
+	og = printf("OG This is a string: %s\n", "Hello World!");
+	if (ft == og)
+		printf("Return value SUCCESS!\n");
+	else
+		printf("Return value FAIL! og: %d ft: %d\n", og, ft);
+	printf("\n");
+
+	ft = ft_printf("FT This is three strings: %s and: %s andand: %s\n", "Hello World!", "Second one...", "and a third one too :-)");
+	og = printf("OG This is three strings: %s and: %s andand: %s\n", "Hello World!", "Second one...", "and a third one too :-)");
+	if (ft == og)
+		printf("Return value SUCCESS!\n");
+	else
+		printf("Return value FAIL! og: %d ft: %d\n", og, ft);
+	printf("\n");
+
+	ft = ft_printf("FT This is an integer: %d\n", 42);
+	og = printf("OG This is an integer: %d\n", 42);
+	if (ft == og)
+		printf("Return value SUCCESS!\n");
+	else
+		printf("Return value FAIL! og: %d ft: %d\n", og, ft);
+	printf("\n");
+
+	ft = ft_printf("FT This is an integer: %i\n", -42);
+	og = printf("OG This is an integer: %i\n", -42);
+	if (ft == og)
+		printf("Return value SUCCESS!\n");
+	else
+		printf("Return value FAIL! og: %d ft: %d\n", og, ft);
+	printf("\n");
+
+	ft = ft_printf("FT This zero int: %d\n", 0);
+	og = printf("OG This zero int: %d\n", 0);
+	if (ft == og)
+		printf("Return value SUCCESS!\n");
+	else
+		printf("Return value FAIL! og: %d ft: %d\n", og, ft);
+	printf("\n");
+
+	ft = ft_printf("FT This is zero hex int: %x\n", 0);
+	og = printf("OG This is zero hex int: %x\n", 0);
+	if (ft == og)
+		printf("Return value SUCCESS!\n");
+	else
+		printf("Return value FAIL! og: %d ft: %d\n", og, ft);
+	printf("\n");
+
+	ft = ft_printf("FT This is hex int: %x\n", 10);
+	og = printf("OG This is hex int: %x\n", 10);
+	if (ft == og)
+		printf("Return value SUCCESS!\n");
+	else
+		printf("Return value FAIL! og: %d ft: %d\n", og, ft);
+	printf("\n");
+
+	ft = ft_printf("FT This is a pointer: %p\n", ptr);
+	og = printf("OG This is a pointer: %p\n", ptr);
+	if (ft == og)
+		printf("Return value SUCCESS!\n");
+	else
+		printf("Return value FAIL! og: %d ft: %d\n", og, ft);
+	printf("\n");
+
+	ft = ft_printf("FT This is a precentage sign: %%\n");
+	og = printf("OG This is a precentage sign: %%\n");	
+	if (ft == og)
+		printf("Return value SUCCESS!\n");
+	else
+		printf("Return value FAIL! og: %d ft: %d\n", og, ft);
+	printf("\n");
 
 	return (0);
 }

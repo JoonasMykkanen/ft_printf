@@ -111,7 +111,7 @@ char	*gnl_strldup(char *src, int len)
 	dst = malloc(sizeof(char) * (len + 1));
 	if (!dst)
 		return (NULL);
-	ft_gnl_memcpy(dst, src, len);
+	gnl_memcpy(dst, src, len);
 	dst[len] = '\0';
 	return (dst);
 }

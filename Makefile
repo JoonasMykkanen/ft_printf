@@ -19,7 +19,7 @@ ft_strchr.c ft_strdup.c ft_strjoin.c ft_strlcat.c ft_strlcpy.c ft_strlen.c\
 ft_strrchr.c ft_substr.c ft_tolower.c ft_toupper.c ft_memchr.c ft_memcmp.c\
 ft_strtrim.c ft_strnstr.c ft_calloc.c ft_strmapi.c ft_striteri.c ft_split.c\
 ft_lstnew.c ft_lstadd_front.c ft_lstsize.c ft_lstadd_back.c ft_lstlast.c\
-ft_puthex_fd.c ft_memrcpy.c\
+ft_puthex_lower_fd.c ft_puthex_upper_fd.c ft_memrcpy.c\
 
 GNL = get_next_line/get_next_line.c get_next_line/get_next_line_utils.c
 
