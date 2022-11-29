@@ -25,10 +25,13 @@ GNL = get_next_line/get_next_line.c get_next_line/get_next_line_utils.c
 
 GNL_O = get_next_line.o get_next_line_utils.o
 
-PRINTF = ft_printf/ft_printf.c
+PRINTF = ft_printf/ft_printf.c ft_printf/convert_c.c ft_printf/convert_d_i_u.c\
+ft_printf/convert_p.c ft_printf/convert_precentage.c ft_printf/convert_s.c\
+ft_printf/convert_x.c
 
-PRINTF_O = ft_printf.o
-
+PRINTF_O = ft_printf.o convert_c.o convert_d_i_u.o convert_p.o convert_precentage.o\
+convert_s.o convert_x.o
+ 
 SRC_O = $(SRC:.c=.o)
 
 INCLUDES = libft.h get_next_line/get_next_line.h ft_printf/ft_printf.h

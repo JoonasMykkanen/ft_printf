@@ -1,28 +1,29 @@
 #include <stdio.h>
 #include <stdarg.h>
 #include "libft.h"
+// #include "ft_printf/ft_printf.h"
 
-static int	convert_c(va_list *args, int count)
+int	convert_c(va_list *args, int count)
 {
 	char	c;
 
-	c = va_arg(*args, char);
+	c = va_arg(*args, int);
 	ft_putchar_fd(c, 1);
 	return (++count);
 }
 
-static int	convert_s(va_list *args, int count)
+int	convert_s(va_list *args, int count)
 {
-	const char	*str;
-	int			len;
+	char	*str;
+	int		len;
 
-	str = va_arg(*args, const char *);
+	str = va_arg(*args, char *);
 	ft_putstr_fd(str, 1);
 	len = ft_strlen(str);
 	return (count + len);
 }
 
-static int	convert_d_i_u(va_list *args, int count)
+int	convert_d_i_u(va_list *args, int count)
 {
 	char	*str;
 	int		num;
@@ -36,7 +37,7 @@ static int	convert_d_i_u(va_list *args, int count)
 	return (count + len);
 }
 
-static int	ft_hexlen(unsigned long long num)
+int	ft_hexlen(unsigned long long num)
 {
 	int		i;
 	char	c;
@@ -66,14 +67,15 @@ static int	ft_hexlen(unsigned long long num)
 
 int	convert_p(va_list *args, int count)
 {
-	void				*ptr;
-	int					len;
+	void	*ptr;
+	int		len;
 
 	ptr = va_arg(*args, void *);
 	ft_putstr_fd("0x", 1);
-	len = ft_hexlen(ptr);
-	ft_puthex_lower_fd(ptr, 1);
-	return (count + len + 2);
+	len = ft_hexlen((unsigned long long)ptr);
+	ft_puthex_lower_fd((unsigned long long)ptr, 1);
+	count = count + len + 2;
+	return (count);
 }
 
 int	convert_x(va_list *args, int count)
@@ -82,6 +84,7 @@ int	convert_x(va_list *args, int count)
 	int		len;
 	int		num;
 
+	num = 0;
 	str = ft_itoa(num);
 	len = ft_strlen(str);
 	num = va_arg(*args, int);
@@ -96,6 +99,7 @@ int	convert_xx(va_list *args, int count)
 	int		len;
 	int		num;
 
+	num = 0;
 	str = ft_itoa(num);
 	len = ft_strlen(str);
 	num = va_arg(*args, int);
@@ -104,13 +108,13 @@ int	convert_xx(va_list *args, int count)
 	return (count + len);
 }
 
-int	convert_precentage(args, count)
+int	convert_precentage(int count)
 {
 	ft_putchar_fd('%', 1);
 	return (++count);
 }
 
-static int	choose_conversion(va_list *args, char var, int count)
+int	choose_conversion(va_list *args, char var, int count)
 {
 	if (var == 'c')
 		count = convert_c(args, count);
@@ -125,11 +129,11 @@ static int	choose_conversion(va_list *args, char var, int count)
 	else if (var == 'X')
 		count = convert_xx(args, count);
 	else if (var == '%')
-		count = convert_precentage(args, count);
+		count = convert_precentage(count);
 	return (count);
 }
 
-static int	print_out(const char *s, va_list *args, int count)
+int	print_out(const char *s, va_list *args, int count)
 {
 	int		i;
 	char	var;
@@ -161,8 +165,6 @@ static int	print_out(const char *s, va_list *args, int count)
 
 int	ft_printf(const char *s, ...)
 {
-	int 	i;
-	char	var;
 	int		count;
 	va_list args;
 
@@ -268,6 +270,10 @@ int	main()
 	else
 		printf("Return value FAIL! og: %d ft: %d\n", og, ft);
 	printf("\n");
+
+	ft_printf("PRINTING WITHOUT ARGUMENTS\n");
+
+	ft_printf("This is with one precentage sign%");
 
 	return (0);
 }
