@@ -14,14 +14,13 @@
 
 int	convert_x(va_list *args, int count)
 {
-	char	*str;
-	int		len;
-	int		num;
+	unsigned int	num;
+	char			*str;
+	int				len;
 
-	num = 0;
+	num = (unsigned int)va_arg(*args, int);
 	str = ft_itoa(num);
-	len = ft_strlen(str);
-	num = va_arg(*args, int);
+	len = ft_hexlen(num);
 	ft_puthex_lower_fd(num, 1);
 	free(str);
 	return (count + len);
@@ -29,14 +28,13 @@ int	convert_x(va_list *args, int count)
 
 int	convert_xx(va_list *args, int count)
 {
-	char	*str;
-	int		len;
-	int		num;
+	unsigned int	num;
+	char			*str;
+	int				len;
 
-	num = 0;
+	num = (unsigned int)va_arg(*args, int);
 	str = ft_itoa(num);
-	len = ft_strlen(str);
-	num = va_arg(*args, int);
+	len = ft_hexlen(num);
 	ft_puthex_upper_fd(num, 1);
 	free(str);
 	return (count + len);

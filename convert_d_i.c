@@ -1,26 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   convert_p.c                                        :+:      :+:    :+:   */
+/*   convert_d_i_u.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jmykkane <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/29 19:21:39 by jmykkane          #+#    #+#             */
-/*   Updated: 2022/11/29 19:21:40 by jmykkane         ###   ########.fr       */
+/*   Created: 2022/11/29 19:22:06 by jmykkane          #+#    #+#             */
+/*   Updated: 2022/11/29 19:22:07 by jmykkane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int	convert_p(va_list *args, int count)
+int	convert_d_i(va_list *args, int count)
 {
-	void	*ptr;
+	char	*str;
+	int		num;
 	int		len;
 
-	ptr = va_arg(*args, void *);
-	ft_putstr_fd("0x", 1);
-	len = ft_hexlen((unsigned long long)ptr);
-	ft_puthex_lower_fd((unsigned long long)ptr, 1);
-	count = count + len + 2;
-	return (count);
+	num = va_arg(*args, int);
+	str = ft_itoa(num);
+	ft_putstr_fd(str, 1);
+	len = ft_strlen(str);
+	free(str);
+	return (count + len);
 }

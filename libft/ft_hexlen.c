@@ -1,26 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   convert_p.c                                        :+:      :+:    :+:   */
+/*   ft_hexlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jmykkane <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/29 19:21:39 by jmykkane          #+#    #+#             */
-/*   Updated: 2022/11/29 19:21:40 by jmykkane         ###   ########.fr       */
+/*   Created: 2022/11/30 16:07:33 by jmykkane          #+#    #+#             */
+/*   Updated: 2022/11/30 16:07:34 by jmykkane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
-
-int	convert_p(va_list *args, int count)
+int	ft_hexlen(unsigned long long num)
 {
-	void	*ptr;
-	int		len;
+	int		i;
 
-	ptr = va_arg(*args, void *);
-	ft_putstr_fd("0x", 1);
-	len = ft_hexlen((unsigned long long)ptr);
-	ft_puthex_lower_fd((unsigned long long)ptr, 1);
-	count = count + len + 2;
-	return (count);
+	i = 0;
+	if (num == 0)
+		return (1);
+	while (num != 0)
+	{
+		num = num / 16;
+		i++;
+	}
+	return (i);
 }

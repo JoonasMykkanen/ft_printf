@@ -1,5 +1,7 @@
 #include "ft_printf.h"
 #include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
 
 /*
 void	test(void)
@@ -104,7 +106,11 @@ void	test(void)
 int	main()
 {
 	
-	ft_printf("%u", -15);
+
+	int x = printf("og: %x \n", -1);
+	int y = ft_printf("ft: %x \n", -1);
+
+	printf("og: %d, ft: %d\n", x, y);
 
 	
 
