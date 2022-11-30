@@ -12,10 +12,10 @@
 
 NAME = libftprintf.a
 
-PRINTF_SRC = ft_printf.c convert_c.c convert_d_i_u.c convert_p.c convert_precentage.c\
+SRC = ft_printf.c convert_c.c convert_d_i_u.c convert_p.c convert_precentage.c\
 convert_s.c convert_x.c
 
-PRINTF_SRC_O = $(PRINTF_SRC:.c=.o)
+SRC_O = $(SRC:.c=.o)
 
 LIBFT = libft/libft.a
 
@@ -27,16 +27,16 @@ all: $(NAME)
 
 $(NAME):
 	cd libft && $(MAKE)
-	cc -c $(FLAGS) $(PRINTF_SRC)
-	ar rc $(NAME) $(PRINTF_SRC_O)
+	mv libft/libft.a $(NAME)
+	cc -c $(FLAGS) $(SRC)
+	ar rc $(NAME) $(SRC_O)
 	
-
 clean:
-	rm -f $(PRINTF_SRC_O)
+	rm -f $(SRC_O)
 	cd libft && $(MAKE) clean
 
 fclean:
-	rm -f $(PRINTF_SRC_O)
+	rm -f $(SRC_O)
 	rm -f $(NAME)
 	cd libft && $(MAKE) fclean
 
