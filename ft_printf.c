@@ -19,8 +19,10 @@ static int	choose_conversion(va_list *args, char var, int count)
 		count = convert_c(args, count);
 	else if (var == 's')
 		count = convert_s(args, count);
-	else if (var == 'd' || var == 'i' || var == 'u')
-		count = convert_d_i_u(args, count);
+	else if (var == 'd' || var == 'i')
+		count = convert_d_i(args, count);
+	else if (var == 'u')
+		count = convert_u(args, count);
 	else if (var == 'p')
 		count = convert_p(args, count);
 	else if (var == 'x')

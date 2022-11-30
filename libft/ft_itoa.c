@@ -39,7 +39,7 @@ static char	*translate(char *str, char rev_num[13], int neg, int i)
 	return (str);
 }
 
-static void	handle_neg(char rev_num[13], int *n, int *neg, int *i)
+static void	handle_neg(char rev_num[13], long long *n, int *neg, int *i)
 {
 	if (*n <= -2147483648)
 	{
@@ -55,12 +55,12 @@ static void	handle_neg(char rev_num[13], int *n, int *neg, int *i)
 	}
 }
 
-char	*ft_itoa(int n)
+char	*ft_itoa(long long n)
 {
 	int		i;
 	int		neg;
 	char	*str;
-	char	rev_num[13];
+	char	rev_num[20];
 
 	i = 0;
 	neg = 0;

@@ -12,8 +12,8 @@
 
 NAME = libftprintf.a
 
-SRC = ft_printf.c convert_c.c convert_d_i_u.c convert_p.c convert_precentage.c\
-convert_s.c convert_x.c
+SRC = ft_printf.c convert_c.c convert_d_i.c convert_p.c convert_precentage.c\
+convert_s.c convert_x.c convert_u.c
 
 SRC_O = $(SRC:.c=.o)
 

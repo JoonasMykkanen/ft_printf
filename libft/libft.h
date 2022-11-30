@@ -25,7 +25,6 @@ typedef struct s_list
 	struct s_list	*next;
 }					t_list;
 
-char	*ft_itoa(int n);
 int		ft_isprint(int c);
 int		ft_tolower(int c);
 int		ft_toupper(int c);
@@ -34,6 +33,7 @@ int		ft_isalpha(int c);
 int		ft_isascii(int c);
 int		ft_isdigit(int c);
 char	*ft_strdup(char *src);
+char	*ft_itoa(long long n);
 int		ft_lstsize(t_list *lst);
 int		ft_atoi(const char *str);
 size_t	ft_strlen(char const *s);
