@@ -1,27 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   convert_u.c                                        :+:      :+:    :+:   */
+/*   ft_puthex_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jmykkane <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/30 14:42:32 by jmykkane          #+#    #+#             */
-/*   Updated: 2022/11/30 14:42:33 by jmykkane         ###   ########.fr       */
+/*   Created: 2022/10/24 16:51:27 by jmykkane          #+#    #+#             */
+/*   Updated: 2022/11/29 17:44:43 by jmykkane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libft.h"
 
-int	convert_u(va_list *args, int count)
+void	ft_puthex_fd(unsigned long long num, int fd)
 {
-	char	*str;
-	long	num;
-	int		len;
+	int		i;
+	char	c;
+	int		temp;
+	char	buf[17];
 
-	num = (unsigned int)va_arg(*args, int);
-	str = ft_itoa(num);
-	ft_putstr_fd(str, 1);
-	len = ft_strlen(str);
-	free(str);
-	return (count + len);
+	i = 0;
+	if (num == 0)
+		ft_putnbr_fd(0, fd);
+	while (num != 0)
+	{
+		temp = num % 16;
+		if (temp < 10)
+		{
+			c = temp + 48;
+			buf[i++] = c;
+		}
+		else
+		{
+			c = temp + 87;
+			buf[i++] = c;
+		}
+		num = num / 16;
+	}
+	while (--i >= 0)
+		ft_putchar_fd(buf[i], fd);
 }

@@ -1,12 +1,23 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_printf.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jmykkane <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/11/30 16:17:18 by jmykkane          #+#    #+#             */
+/*   Updated: 2022/11/30 16:17:22 by jmykkane         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #ifndef FT_PRINTF_H
 # define FT_PRINTF_H
 
-#include <stdarg.h>
+# include <stdarg.h>
 
-#ifndef LIBFT_H
-# include "libft/libft.h"
-#endif
+# ifndef LIBFT_H
+#  include "libft/libft.h"
+# endif
 
 int	ft_printf(const char *s, ...);
 int	convert_precentage(int count);

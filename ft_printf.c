@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-#include <stdio.h>
 
 static int	choose_conversion(va_list *args, char var, int count)
 {
@@ -37,7 +36,6 @@ static int	choose_conversion(va_list *args, char var, int count)
 static int	print_out(const char *s, va_list *args, int count)
 {
 	int		i;
-	char	var;
 	int		mode;
 
 	i = -1;
@@ -57,8 +55,7 @@ static int	print_out(const char *s, va_list *args, int count)
 		else if (mode == 1)
 		{
 			mode = 0;
-			var = s[i];
-			count = choose_conversion(args, var, count);
+			count = choose_conversion(args, s[i], count);
 		}
 	}
 	return (count);
@@ -66,12 +63,12 @@ static int	print_out(const char *s, va_list *args, int count)
 
 int	ft_printf(const char *s, ...)
 {
+	va_list	args;
 	int		count;
-	va_list args;
 
 	count = 0;
 	va_start(args, s);
 	count = print_out(s, &args, count);
 	va_end(args);
-	return (count);	
+	return (count);
 }
